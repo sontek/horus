@@ -16,14 +16,15 @@ from pyramid.paster import (
 from pyramid_signup.models import User
 from pyramid_signup.models import SUEntity
 
-from zope.sqlalchemy import ZopeTransactionExtension
+from zope.sqlalchemy import register
 
-DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
+DBSession = scoped_session(sessionmaker())
+register(DBSession)
 
-def usage(argv):# pragma: no cover 
+def usage(argv):# pragma: no cover
     cmd = os.path.basename(argv[0])
     print('usage: %s <config_uri>\n'
-          '(example: "%s development.ini")' % (cmd, cmd)) 
+          '(example: "%s development.ini")' % (cmd, cmd))
     sys.exit(1)
 
 def main(argv=sys.argv): # pragma: no cover
