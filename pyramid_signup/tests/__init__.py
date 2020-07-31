@@ -9,7 +9,7 @@ from pyramid.response import Response
 from paste.deploy.loadwsgi import appconfig
 from sqlalchemy.orm import scoped_session
 from sqlalchemy.orm import sessionmaker
-from zope.sqlalchemy import ZopeTransactionExtension
+from zope.sqlalchemy import register
 
 from mock import Mock
 import os
@@ -20,7 +20,8 @@ from pyramid_signup.interfaces import ISUSession
 here = os.path.dirname(__file__)
 settings = appconfig('config:' + os.path.join(here, '../../', 'test.ini'))
 
-DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
+DBSession = scoped_session(sessionmaker())
+register(DBSession)
 
 class BaseTestCase(unittest.TestCase):
     @classmethod
