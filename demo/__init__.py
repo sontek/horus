@@ -10,12 +10,13 @@ from sqlalchemy.orm import scoped_session
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import engine_from_config
 
-from zope.sqlalchemy import ZopeTransactionExtension
+from zope.sqlalchemy import register
 
 from pyramid_signup.interfaces import ISUSession
 from pyramid_signup import groupfinder
 
-DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
+DBSession = scoped_session(sessionmaker())
+register(DBSession)
 
 def main(global_config, **settings):
     config = Configurator(settings=settings)
